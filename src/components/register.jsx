@@ -22,7 +22,7 @@ export default function Register() {
 
       if (response.status === 200) {
         toast.success("Account Created!");
-        navigate("/profile");
+        navigate("/login");
 
       }
     } catch (err) {

@@ -101,8 +101,8 @@ export default function Navbar() {
                         <span className="sr-only">Open user menu</span>
                         <img
                           alt=""
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                          className="size-8 rounded-full"
+                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxtparQeAnR6iyIHuXktc_785DhjtXdLLRIQ&s"
+                          className="size-10 rounded-full"
                         />
                       </MenuButton>
                     </div>
@@ -128,10 +128,11 @@ export default function Navbar() {
                       </MenuItem>
                     </MenuItems>
                   </Menu>
-                </div>
-                <button onClick={()=>handleLogout()} className="bg-gray-800 text-white rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-900 focus:bg-gray-900 after:content-[''] after:block after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full after:origin-left hover:text-white">
+                  <button onClick={()=>handleLogout()} className="bg-gray-800 text-white rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-900 focus:bg-gray-900 after:content-[''] after:block after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full after:origin-left hover:text-white">
                   Log out
                 </button>
+                </div> 
+                
               </>
             )}
           </div>

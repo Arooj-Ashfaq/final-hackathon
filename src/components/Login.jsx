@@ -37,7 +37,7 @@ export default function Login() {
     <>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-lg">
         <form
-          className="mx-auto max-w-5xl py-15 sm:py-15 lg:py-20 bg-slate-100 sm:px-2 lg:px-5 rounded-3xl shadow-2xl space-y-6"
+          className="mx-auto max-w-5xl py-15 sm:py-15 lg:py-20 bg-slate-300 sm:px-2 lg:px-5 rounded-3xl shadow-2xl space-y-6"
           onSubmit={handleSignin}
         >
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-800">
