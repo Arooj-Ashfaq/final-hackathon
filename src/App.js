@@ -7,6 +7,7 @@ import Register from "./components/register";
 import Profile from "./components/Profile";
 import Notifications from "./components/Notification";
 import Settings from "./components/Settings";
+import Confirm from "./components/Confirm";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/confirm" element={<Confirm />} />
           
         </Routes>
       </BrowserRouter>

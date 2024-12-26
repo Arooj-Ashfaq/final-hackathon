@@ -5,7 +5,12 @@ import Footer from './Footer'
 function Home() {
   const navigate = useNavigate();
   const handleNavigate = () => {
+    const token = localStorage.getItem('token')
+    if(!token){
     navigate("/register");
+  }else{
+    navigate('')
+  }
   };
   return (
     <div>

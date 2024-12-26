@@ -52,9 +52,10 @@ export default function Settings() {
         body
       );
       if (updateUser) {
-        toast.success(updateUser?.data.message);
-        navigate("/profile");
+      navigate("/profile");
+
       }
+      toast.success('User updated Successfully');
     } catch (err) {
       console.error(err);
     }
