@@ -63,7 +63,7 @@ function Profile() {
           or Want to delete your account?{" "}
           <button
           onClick={()=> navigate('/confirm')}
-              className="rounded-md bg-red-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-800 focus:ring-indigo-500"
+              className="rounded-md bg-red-700 px-3 py-2 text-sm font-semibold text-white hover:shadow-lg hover:shadow-gray-700 hover:bg-red-800 focus:ring-indigo-500"
           >Delete Account</button>
         </p>
       </div>

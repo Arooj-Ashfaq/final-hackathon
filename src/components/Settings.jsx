@@ -3,7 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
-import {jwtDecode} from "jwt-decode"; // Fix import to match default usage
+import {jwtDecode} from "jwt-decode";
 import axios from "axios";
 
 export default function Settings() {
@@ -15,25 +15,48 @@ export default function Settings() {
     id: "",
   });
   const [originalData, setOriginalData] = useState(null);
+  const [user, setUser] = useState(null);
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
+    const getData = async () => {
       try {
         const decoded = jwtDecode(token);
+        const userId = decoded.id;
+
+        const response = await axios.get(
+          `http://localhost:5000/user/${userId}`,
+          {
+            headers: {
+              token: token,
+            },
+          }
+        );
+        setUser(response?.data?.user || null);
+      } catch (err) {
+        console.error("Error fetching user data:", err);
+      }
+    };
+
+    getData();
+  }, [token]);
+
+  useEffect(() => {
+    if (user) {
+      try {
         const initialData = {
-          firstName: decoded.firstName || "",
-          lastName: decoded.lastName || "",
-          email: decoded.email || "",
-          id: decoded.id || "",
+          firstName: user.firstName || "",
+          lastName: user.lastName || "",
+          email: user.email || "",
+          id: user.id || "",
         };
         setFormData(initialData);
-        setOriginalData(initialData); // Save initial data for discard functionality
+        setOriginalData(initialData);
       } catch (error) {
         console.error("Invalid token:", error);
       }
     }
-  }, []);
+  }, [user]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -42,13 +65,17 @@ export default function Settings() {
       [id]: value,
     }));
   };
+  
 
   const handleUpdate = async () => {
     try {
+      const token = localStorage.getItem('token')
+      const decoded = jwtDecode(token)
+      const userId = decoded.id
       const { firstName, lastName, email, id } = formData;
       const body = { firstName, lastName, email, id };
       const updateUser = await axios.patch(
-        `http://localhost:5000/user/${formData.id}`,
+        `http://localhost:5000/user/${userId}`,
         body
       );
       if (updateUser) {
