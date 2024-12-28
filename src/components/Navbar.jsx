@@ -12,6 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const navigate = useNavigate();
+
   const handleNotifications = () => {
     navigate("/notifications");
   };
@@ -19,9 +20,9 @@ export default function Navbar() {
   let navigation = [];
   if (token) {
     navigation = [
-      { name: "Home", href: "/", current: true }
-      // { name: "About", href: "/about", current: false },
-
+      { name: "Home", href: "/", current: true },
+      { name: "My Notes", href: "/mynotes", current: false },
+      { name: "Explore Notes", href: "/allnotes", current: false },
     ];
   } else {
     navigation = [
@@ -30,11 +31,11 @@ export default function Navbar() {
       { name: "Log in", href: "/login", current: false },
     ];
   }
-  const handleLogout=()=>{
-    localStorage.clear()
-    navigate('/login')
-  }
-
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
+  
   return (
     <>
       <Disclosure as="nav" className="bg-gray-800">
@@ -59,10 +60,10 @@ export default function Navbar() {
               <Link to="/">
                 <div className="flex shrink-0 items-center">
                   <span className="h-10 w-auto text-blue-200 text-lg">
-                    Arooj
-                  </span>{" "}
+                    Final 
+                  </span>{" "} 
                   <span className="h-5 w-auto text-green-400 text-lg">
-                    Ashfaq
+                     Hackathon
                   </span>
                 </div>
               </Link>
@@ -128,11 +129,13 @@ export default function Navbar() {
                       </MenuItem>
                     </MenuItems>
                   </Menu>
-                  <button onClick={()=>handleLogout()} className="bg-gray-800 text-white rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-900 focus:bg-gray-900 after:content-[''] after:block after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full after:origin-left hover:text-white">
-                  Log out
-                </button>
-                </div> 
-                
+                  <button
+                    onClick={() => handleLogout()}
+                    className="bg-gray-800 text-white rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-900 focus:bg-gray-900 after:content-[''] after:block after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full after:origin-left hover:text-white"
+                  >
+                    Log out
+                  </button>
+                </div>
               </>
             )}
           </div>

@@ -42,7 +42,7 @@ function Profile() {
 
       <div className="text-center py-10">
         <h1 className="text-balance text-2xl text-black font-semibold tracking-tight text-gray-00 sm:text-5xl">
-          {user ? `Welcome, ${user.firstName} ${user.lastName}!` : "Loading..."}
+          {user ? `Welcome, ${user.displayName}!` : "Loading..."}
         </h1>
         <p className="mt-8 text-center text-pretty text-md font-medium text-black sm:text-xl/6">
           {user ? `Your Email: ${user.email}` : ""}

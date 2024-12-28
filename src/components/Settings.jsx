@@ -9,8 +9,8 @@ import axios from "axios";
 export default function Settings() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+   displayName : "",
+   password : "",
     email: "",
     id: "",
   });
@@ -45,9 +45,9 @@ export default function Settings() {
     if (user) {
       try {
         const initialData = {
-          firstName: user.firstName || "",
-          lastName: user.lastName || "",
+          displayName: user.displayName || "",
           email: user.email || "",
+          password: user.password || "",
           id: user.id || "",
         };
         setFormData(initialData);
@@ -72,8 +72,8 @@ export default function Settings() {
       const token = localStorage.getItem('token')
       const decoded = jwtDecode(token)
       const userId = decoded.id
-      const { firstName, lastName, email, id } = formData;
-      const body = { firstName, lastName, email, id };
+      const { displayName, email,password, id } = formData;
+      const body = { displayName, email,password, id };
       const updateUser = await axios.patch(
         `http://localhost:5000/user/${userId}`,
         body
@@ -109,37 +109,18 @@ export default function Settings() {
 
             <div className="border-b border-gray-400 pb-12">
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div className="sm:col-span-3">
+                <div className="sm:col-span-6">
                   <label
-                    htmlFor="firstName"
+                    htmlFor="displayName"
                     className="block text-sm font-medium text-gray-900"
                   >
-                    First name
+                    Display Name
                   </label>
                   <div className="mt-2">
                     <input
-                      id="firstName"
+                      id="displayName"
                       type="text"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      required
-                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-500 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-gray-800 sm:text-sm/6"
-                    />
-                  </div>
-                </div>
-
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="lastName"
-                    className="block text-sm font-medium text-gray-900"
-                  >
-                    Last name
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="lastName"
-                      type="text"
-                      value={formData.lastName}
+                      value={formData.displayName}
                       onChange={handleChange}
                       required
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-500 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-gray-800 sm:text-sm/6"
@@ -159,6 +140,24 @@ export default function Settings() {
                       id="email"
                       type="email"
                       value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-500 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-gray-800 sm:text-sm/6"
+                    />
+                  </div>
+                </div>
+                <div className="sm:col-span-6">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-gray-900"
+                  >
+                    password
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="password"
+                      type="password"
+                      value={formData.password}
                       onChange={handleChange}
                       required
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-500 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-gray-800 sm:text-sm/6"

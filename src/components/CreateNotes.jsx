@@ -1,27 +1,38 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "./Footer";
+import { jwtDecode } from "jwt-decode";
 
-export default function Register() {
+export default function CreateNotes() {
   const navigate = useNavigate();
-  const [displayName, setDisplayName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [subject, setSubject] = useState("");
+  const [createdBy, setCreatedBy] = useState('')
+  const [createdAt, setCreatedAt] = useState('')
+
+  useEffect(()=>{
+    const token = localStorage.getItem('token')
+  const decoded = jwtDecode(token)
+  setCreatedBy(decoded.id)
+  setCreatedAt(Date.now())
+
+  },[])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const body = { displayName, email, password };
+    const body = { title, subject, content , createdBy, createdAt};
+   
 
     try {
-      const response = await axios.post("http://localhost:5000/user", body);
-
+      const response = await axios.post("http://localhost:5000/note", body);
       if (response.status === 200) {
-        toast.success("Account Created!");
-        navigate("/login");
+        toast.success("Notes Created Successfully!");
+        navigate("/mynotes");
 
       }
     } catch (err) {
@@ -38,14 +49,13 @@ export default function Register() {
   return (
     <>
       <form
-        onSubmit={handleSubmit}
-        className="mx-auto mt-9 max-w-2xl py-16 sm:py-16 lg:py-30 bg-slate-300 sm:px-20 lg:px-50 rounded-3xl shadow-2xl"
+        className="mx-auto my-9 max-w-2xl py-16 sm:py-16 lg:py-30 bg-slate-300 sm:px-20 lg:px-50 rounded-3xl shadow-2xl"
       >
         <div className="space-y-12">
           <div className="border-b border-gray-400 pb-12">
             <br />
             <h3 className="text-balance text-4xl font-semibold tracking-tight text-gray-800 sm:text-4xl text-center">
-              Sign Up
+              Create Notes 
             </h3>
           </div>
 
@@ -53,17 +63,17 @@ export default function Register() {
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-6">
                 <label
-                  htmlFor="first-name"
+                  htmlFor="title"
                   className="block text-sm/6 font-medium text-gray-900"
                 >
-                  Display name
+                  Title
                 </label>
                 <div className="mt-2">
                   <input
-                    id="first-name"
+                    id="title"
                     type="text"
-                    value={displayName}
-                    onChange={(e) => setDisplayName(e.target.value)}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                     required
                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-500 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-gray-800 sm:text-sm/6"
                   />
@@ -72,17 +82,17 @@ export default function Register() {
 
               <div className="sm:col-span-6">
                 <label
-                  htmlFor="email"
+                  htmlFor="content"
                   className="block text-sm font-medium text-gray-900"
                 >
-                  Email address
+                    Subject
                 </label>
                 <div className="mt-2">
                 <input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  id="subject"
+                  type="text"
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
                   required
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-500 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-gray-800 sm:text-sm/6"
                 />
@@ -91,19 +101,19 @@ export default function Register() {
 
               <div className="sm:col-span-6">
                 <label
-                  htmlFor="password"
+                  htmlFor="content"
                   className="block text-sm font-medium text-gray-900"
                 >
-                  Password
+                  Content
                 </label>
                 <div className="mt-2">
-                <input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                <textarea
+                  id="content"
+                  type="text"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
                   required
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-500 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-gray-800 sm:text-sm/6"
+                  className="block w-full row-span-full rounded-lg bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-500 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-gray-800 sm:text-sm/6"
                 />
                 </div>
               </div>
@@ -112,24 +122,21 @@ export default function Register() {
 
           <div className="flex justify-center mt-6">
             <button
-              type="submit"
+              onClick={handleSubmit}
               className="rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-900 focus:ring-indigo-500"
             >
               Save
+            </button>
+            <button
+              onClick={()=>{navigate('/mynotes')}}
+              className="rounded-md px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm"
+            >
+              Cancel
             </button>
           </div>
         </div>
       </form>
 
-      <p className="my-10 text-center text-sm text-gray-500">
-        Already have an account?{" "}
-        <Link
-          to="/login"
-          className="font-semibold text-indigo-600 hover:text-indigo-500"
-        >
-          Log In
-        </Link>
-      </p>
       <ToastContainer
         position="top-right"
         autoClose={5000}
